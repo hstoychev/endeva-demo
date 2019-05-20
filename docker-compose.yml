@@ -1,20 +1,21 @@
-version: "3.2"
+version: "3.3"
 services:
   php:
-    build: 
-      context: './php/'
-      args:
-       PHP_VERSION: ${PHP_VERSION}
+    image: php
+    build:
+        context: ./php
+        dockerfile: Dockerfile
     networks:
       - backend
     volumes:
       - ${PROJECT_ROOT}/:/var/www/html/
     container_name: php
-  apache:
+  apache:  
+    image: apache
     build:
-      context: './apache/'
-      args:
-       APACHE_VERSION: ${APACHE_VERSION}
+        context: ./apache
+        dockerfile: Dockerfile
+    
     depends_on:
       - php
       - mysql
@@ -27,7 +28,7 @@ services:
       - ${PROJECT_ROOT}/:/var/www/html/
     container_name: apache
   mysql:
-    image: mysql:${MYSQL_VERSION:-latest}
+    image: mysql:5.7
     restart: always
     ports:
       - "3306:3306"
