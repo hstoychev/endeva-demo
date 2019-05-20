@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: php-deployment
+  labels:
+    tier: backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: php
+      tier: backend
+  template:
+    metadata:
+      labels:
+        app: php
+        tier: backend
+    spec:
+      volumes:
+      - name: azure-managed-disk
+        persistentVolumeClaim:
+          claimName: azure-managed-disk
+      containers:
+      - name: php
+        image: php:7-fpm
+        volumeMounts:
+        - name: azure-managed-disk
+          mountPath: /app
+      initContainers:
+      - name: install
+        image: busybox
+        volumeMounts:
+        - name: azure-managed-disk
+          mountPath: /app
+        command:
+        - wget
+        - "-O"
+        - "/app/index.php"
+        - https://raw.githubusercontent.com/do-community/php-kubernetes/master/index.php
