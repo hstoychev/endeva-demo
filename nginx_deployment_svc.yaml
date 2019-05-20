@@ -17,9 +17,9 @@ spec:
         tier: backend
     spec:
       volumes:
-      - name: azure-managed-disk
+      - name: app-persistent-storage
         persistentVolumeClaim:
-          claimName: azure-managed-disk
+          claimName: app-pv-claim
       - name: config
         configMap:
           name: nginx-config
@@ -32,7 +32,22 @@ spec:
         ports:
         - containerPort: 80
         volumeMounts:
-        - name: azure-managed-disk
+        - name: app-persistent-storage
           mountPath: /app
         - name: config
-          mountPath: /etc/nginx/conf.d
+          mountPath: /etc/nginx/conf.d         
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-svc
+  labels:
+    tier: backend
+spec:
+  type: ClusterIP
+  selector:
+    app: nginx
+    tier: backend
+  ports:
+  - protocol: TCP
+    port: 80

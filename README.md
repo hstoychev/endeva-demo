@@ -6,15 +6,19 @@
 1.2. Connect to AKS:
 - Pre-rquisite: install azure CLI(https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest)
 - Use those commands: 
-
+```
 az login
-sudo az aks install-cli  ## in Windows will have to add the PATH (set PATH=%PATH%;C:\Users\hstoy\.azure-kubectl" or "$env:path += 'C:\Users\user\.azure-kubectl')
+sudo az aks install-cli   `in Windows will have to add the PATH (set PATH=%PATH%;C:\Users\hstoy\.azure-kubectl" or "$env:path += 'C:\Users\user\.azure-kubectl')`
 az aks get-credentials -g myResourceGroup -n myCluster
 kubectl get nodes
-
+```
 - Install Kompose (https://github.com/kubernetes/kompose/blob/master/docs/installation.md#windows). For Windows require "chocolatery"
 
 1.2.1. Connect to AKS dashboard with required permissions: https://docs.microsoft.com/en-us/azure/aks/kubernetes-dashboard
-Browse dashboard: az aks browse --resource-group endeva-demo -n hristok8s
-
+Browse dashboard: 
+```
+az aks browse --resource-group endeva-demo -n hristok8s
+```
 1.3. Create a Static IP: https://docs.microsoft.com/en-us/azure/aks/static-ip
+
+1.4. AKS Monitoring from Portal -> Monitor -> Containers/Insights. Aalerts can be configured by using custom query in Log Analytics worspace or with Azure Metric Alerts API.
