@@ -36,4 +36,4 @@ spec:
         - wget
         - "-O"
         - "/app/index.php"
-        - https://raw.githubusercontent.com/do-community/php-kubernetes/master/index.php
+        - https://raw.githubusercontent.com/hstoychev/endeva-demo/master/public_html/index.php

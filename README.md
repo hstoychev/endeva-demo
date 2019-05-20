@@ -15,3 +15,6 @@ kubectl get nodes
 - Install Kompose (https://github.com/kubernetes/kompose/blob/master/docs/installation.md#windows). For Windows require "chocolatery"
 
 1.2.1. Connect to AKS dashboard with required permissions: https://docs.microsoft.com/en-us/azure/aks/kubernetes-dashboard
+Browse dashboard: az aks browse --resource-group endeva-demo -n hristok8s
+
+1.3. Create a Static IP: https://docs.microsoft.com/en-us/azure/aks/static-ip
