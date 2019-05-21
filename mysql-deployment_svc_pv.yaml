@@ -34,6 +34,12 @@ spec:
         env:
           # Use secret in real usage
         - name: MYSQL_ROOT_PASSWORD
+          value: rootpassword
+        - name: MYSQL_DATABASE
+          value: dbtest
+        - name: MYSQL_USER
+          value: otherUser
+        - name: MYSQL_PASSWORD
           value: password
         ports:
         - containerPort: 3306
