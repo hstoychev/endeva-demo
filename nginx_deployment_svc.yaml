@@ -28,7 +28,7 @@ spec:
             path: site.conf
       containers:
       - name: nginx
-        image: hstoychev/endeva-demo-php:latest
+        image: hstoychev/endeva-demo-nginx:latest
         ports:
         - containerPort: 80
         volumeMounts:
