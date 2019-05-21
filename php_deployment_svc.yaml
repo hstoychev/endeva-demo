@@ -22,7 +22,7 @@ spec:
           claimName: app-pv-claim
       containers:      
       - name: php
-        image: php:7.3.2-fpm
+        image: hstoychev/endeva-demo-php:latest
         ports:
         - containerPort: 9000
         livenessProbe:
