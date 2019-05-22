@@ -23,6 +23,10 @@ az aks browse --resource-group endeva-demo -n hristok8s
 
 1.4. AKS Monitoring from Portal -> Monitor -> Containers/Insights. Aalerts can be configured by using custom query in Log Analytics worspace or with Azure Metric Alerts API.
 
+1.5. Configure infrastructure in AKS cluster:
+- Set Persistant Volume and Persistant Volume Claims. Add ReadWriteMany PV as Azurefile (needed for our web and app):
+https://docs.microsoft.com/en-us/azure/aks/azure-files-dynamic-pv
+
 
 3. Grant AKS access to ACR
 ```https://docs.microsoft.com/en-us/azure/container-registry/container-registry-auth-aks?toc=%2fazure%2faks%2ftoc.json#grant-aks-access-to-acr```

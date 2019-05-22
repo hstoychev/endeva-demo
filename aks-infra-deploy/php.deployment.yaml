@@ -35,7 +35,7 @@ spec:
       volumes:
       - name: app
         persistentVolumeClaim:
-          claimName: app
+          claimName: app-pvc
       containers:      
       - name: php
         image: demoacr.azurecr.io/hstoychev/endeva-demo-php:latest
