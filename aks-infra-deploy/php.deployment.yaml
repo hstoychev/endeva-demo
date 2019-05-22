@@ -1,3 +1,19 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: php
+  labels:
+    tier: backend
+spec:
+  type: ClusterIP
+  selector:
+    app: php
+    tier: backend
+  ports:
+  - protocol: TCP
+    port: 9000
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -17,9 +33,9 @@ spec:
         tier: backend
     spec:
       volumes:
-      - name: app-persistent-storage
+      - name: app
         persistentVolumeClaim:
-          claimName: app-pv-claim
+          claimName: app
       containers:      
       - name: php
         image: hstoychev/endeva-demo-php:latest
@@ -32,31 +48,16 @@ spec:
           periodSeconds: 5
           timeoutSeconds: 2
         volumeMounts:
-        - name: app-persistent-storage
+        - name: app
           mountPath: /app
       initContainers:
       - name: install
         image: busybox
         volumeMounts:
-        - name: app-persistent-storage
+        - name: app
           mountPath: /app
         command:
         - wget
         - "-O"
         - "/app/index.php"
         - https://raw.githubusercontent.com/hstoychev/endeva-demo/master/public_html/index.php        
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: php
-  labels:
-    tier: backend
-spec:
-  type: ClusterIP
-  selector:
-    app: php
-    tier: backend
-  ports:
-  - protocol: TCP
-    port: 9000
