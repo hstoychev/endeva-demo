@@ -3,6 +3,7 @@ kind: StorageClass
 apiVersion: storage.k8s.io/v1
 metadata:
   name: azurefile
+  namespace: default
 provisioner: kubernetes.io/azure-file
 mountOptions:
   - dir_mode=0777
@@ -16,6 +17,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   name: system:azure-cloud-provider
+  namespace: default
 rules:
 - apiGroups: ['']
   resources: ['secrets']
@@ -25,6 +27,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
   name: system:azure-cloud-provider
+  namespace: default
 roleRef:
   kind: ClusterRole
   apiGroup: rbac.authorization.k8s.io
@@ -38,6 +41,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: azurefile
+  namespace: default
 spec:
   accessModes:
     - ReadWriteMany
@@ -50,6 +54,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: app-pvc
+  namespace: default
 spec:
   accessModes:
     - ReadWriteOnce
@@ -61,6 +66,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: mysql-pvc
+  namespace: default
 spec:
   accessModes:
     - ReadWriteOnce
