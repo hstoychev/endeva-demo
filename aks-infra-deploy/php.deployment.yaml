@@ -38,7 +38,10 @@ spec:
           claimName: app
       containers:      
       - name: php
-        image: hstoychev/endeva-demo-php:latest
+        image: demoacr.azurecr.io/hstoychev/endeva-demo-php:latest
+      imagePullSecrets:
+      - name: my-acr-secret
+        imagePullPolicy: Always
         ports:
         - containerPort: 9000
         livenessProbe:

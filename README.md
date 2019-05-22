@@ -22,3 +22,26 @@ az aks browse --resource-group endeva-demo -n hristok8s
 1.3. Create a Static IP: https://docs.microsoft.com/en-us/azure/aks/static-ip
 
 1.4. AKS Monitoring from Portal -> Monitor -> Containers/Insights. Aalerts can be configured by using custom query in Log Analytics worspace or with Azure Metric Alerts API.
+
+
+3. Grant AKS access to ACR
+```https://docs.microsoft.com/en-us/azure/container-registry/container-registry-auth-aks?toc=%2fazure%2faks%2ftoc.json#grant-aks-access-to-acr```
+
+Bash script for granting AKS Service Principal access to ACR:
+```
+#!/bin/bash
+
+AKS_RESOURCE_GROUP=myAKSResourceGroup
+AKS_CLUSTER_NAME=myAKSCluster
+ACR_RESOURCE_GROUP=myACRResourceGroup
+ACR_NAME=myACRRegistry
+
+# Get the id of the service principal configured for AKS
+CLIENT_ID=$(az aks show --resource-group $AKS_RESOURCE_GROUP --name $AKS_CLUSTER_NAME --query "servicePrincipalProfile.clientId" --output tsv)
+
+# Get the ACR registry resource id
+ACR_ID=$(az acr show --name $ACR_NAME --resource-group $ACR_RESOURCE_GROUP --query "id" --output tsv)
+
+# Create role assignment
+az role assignment create --assignee $CLIENT_ID --role acrpull --scope $ACR_ID
+```
