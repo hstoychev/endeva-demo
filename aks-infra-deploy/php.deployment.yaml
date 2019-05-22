@@ -39,8 +39,8 @@ spec:
       containers:      
       - name: php
         image: demoacr.azurecr.io/hstoychev/endeva-demo-php:latest
-      imagePullSecrets:
-      - name: my-acr-secret
+        imagePullSecrets:
+        - name: my-acr-secret
         imagePullPolicy: Always
         ports:
         - containerPort: 9000
