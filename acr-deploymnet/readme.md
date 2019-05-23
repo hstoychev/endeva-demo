@@ -21,7 +21,7 @@ Parameter "assignPermission" is with two pre-defined values: "YES" and "NO". If 
 
 •	Reader
 •	Contributor
-•	 Owner
+•	Owner
 •	acrImageSigner 
 •	acrPull
 •	acrPush
