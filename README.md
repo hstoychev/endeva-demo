@@ -1,14 +1,14 @@
-#### ENDEVA DEMO README
+# ENDEVA DEMO README
 
-# Pre-requesites & Links:
+## Pre-requesites & Links:
 - Azure Subscription 
 - Azure DevOps (free version): https://dev.azure.com/hstoychev87/endeva-demo
 - GitHub repository: (if readed in Azure DevOps https://github.com/hstoychev/endeva-demo )
 
-# Our end goal:
+## Our end goal:
 Microservices and automation Build/Deploy process CI/CD for common web application technologies such as PHP-Apache/NginX-MySQL. Docker registry, monitoring and orchestration in Cloud native environment: Azure Container Registry, Azure Kubernetes Services, Azure DevOps.
 
-# Build steps:
+## Build steps:
 
 1. Create K8s cluster in Azure (AKS). We can use ARM tempaltes to automate AKS deployment and set specific settings as Disk size, OS type, node Kubernetes version and SSH  public key, set RBAC and networking (https://github.com/Azure/azure-quickstart-templates/blob/master/101-aks/azuredeploy.json).
 
@@ -67,3 +67,8 @@ az role assignment create --assignee $CLIENT_ID --role acrpull --scope $ACR_ID
 - Setup Public/Private project 
 - Add all required "Service connections": Azure Subscription for ACR and AKS, GitHub repo for build and release pipelines 
 - Create GitHub Service connection using OAuth (otherwise cannot manage AKS cluster infrastructure)
+
+3.1. Configure Builds-Pipelines 
+- Set Build pipeline for initial Persistant Volume and Volume Claim on K8s cluster and run to deploy it on AKS.
+- Set two Builds pipelines for build and push docker images from GitHub repo to ACR. Both PHP and NGINX Continues Deployment CD pipelines.
+- Set 
