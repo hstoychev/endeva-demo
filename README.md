@@ -8,7 +8,11 @@
 # Our end goal:
 Microservices and automation Build/Deploy process CI/CD for common web application technologies such as PHP-Apache/NginX-MySQL. Docker registry, monitoring and orchestration in Cloud native environment: Azure Container Registry, Azure Kubernetes Services, Azure DevOps.
 
+# Build steps:
+
 1. Create K8s cluster in Azure (AKS). We can use ARM tempaltes to automate AKS deployment and set specific settings as Disk size, OS type, node Kubernetes version and SSH  public key, set RBAC and networking (https://github.com/Azure/azure-quickstart-templates/blob/master/101-aks/azuredeploy.json).
+
+NOTE: Be sure that AKS Service Principal account have OWNER role permissions(RBAC) over all AKS related Resource Groups in Azure Subscription!
 
 1.1. We are dploying our AKS with Log Analytics workspace for general monitoring purposes.
 - AKS Monitoring from Portal -> Monitor -> Containers/Insights. Aalerts can be configured by using custom query in Log Analytics worspace or with Azure Metric Alerts API.
@@ -36,8 +40,9 @@ az aks browse --resource-group endeva-demo -n hristok8s
 https://docs.microsoft.com/en-us/azure/aks/azure-files-dynamic-pv
 
 2. Create and deploy Azure Container Registry
+- From acr-deployment folder you can find Azure Resource Mananger/ ARM template for deploying ACR with Service Principal permission option, so AKS SP could be granted automatically with requried ACR Push and Pull permissions.
 
-3. Grant AKS access to ACR
+2.1. Grant AKS access to ACR if ACR already exist and deployed without our ARM template:
 ```https://docs.microsoft.com/en-us/azure/container-registry/container-registry-auth-aks?toc=%2fazure%2faks%2ftoc.json#grant-aks-access-to-acr```
 
 Bash script for granting AKS Service Principal access to ACR:
@@ -58,3 +63,7 @@ ACR_ID=$(az acr show --name $ACR_NAME --resource-group $ACR_RESOURCE_GROUP --que
 # Create role assignment
 az role assignment create --assignee $CLIENT_ID --role acrpull --scope $ACR_ID
 ```
+3. Setup Azure DevOps (Az Dev):
+- Setup Public/Private project 
+- Add all required "Service connections": Azure Subscription for ACR and AKS, GitHub repo for build and release pipelines 
+- Create GitHub Service connection using OAuth (otherwise cannot manage AKS cluster infrastructure)
