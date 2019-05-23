@@ -1,8 +1,17 @@
-#### ENDEVA DEMO READMY
+#### ENDEVA DEMO README
+
+# Pre-requesites & Links:
+- Azure Subscription 
+- Azure DevOps (free version): https://dev.azure.com/hstoychev87/endeva-demo
+- GitHub repository: (if readed in Azure DevOps https://github.com/hstoychev/endeva-demo )
+
+# Our end goal:
+Microservices and automation Build/Deploy process CI/CD for common web application technologies such as PHP-Apache/NginX-MySQL. Docker registry, monitoring and orchestration in Cloud native environment: Azure Container Registry, Azure Kubernetes Services, Azure DevOps.
 
 1. Create K8s cluster in Azure (AKS). We can use ARM tempaltes to automate AKS deployment and set specific settings as Disk size, OS type, node Kubernetes version and SSH  public key, set RBAC and networking (https://github.com/Azure/azure-quickstart-templates/blob/master/101-aks/azuredeploy.json).
 
 1.1. We are dploying our AKS with Log Analytics workspace for general monitoring purposes.
+- AKS Monitoring from Portal -> Monitor -> Containers/Insights. Aalerts can be configured by using custom query in Log Analytics worspace or with Azure Metric Alerts API.
 1.2. Connect to AKS:
 - Pre-rquisite: install azure CLI(https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest)
 - Use those commands: 
@@ -22,11 +31,11 @@ az aks browse --resource-group endeva-demo -n hristok8s
 1.3. Create a Static IP: https://docs.microsoft.com/en-us/azure/aks/static-ip
 - You may need to grant the service principal for your AKS cluster the Network Contributor role to the resource group where your Azure virtual network resources are deployed. 
 
-1.4. AKS Monitoring from Portal -> Monitor -> Containers/Insights. Aalerts can be configured by using custom query in Log Analytics worspace or with Azure Metric Alerts API.
-
-1.5. Configure infrastructure in AKS cluster:
+1.4. Configure infrastructure in AKS cluster:
 - Set Persistant Volume and Persistant Volume Claims. Add ReadWriteMany PV as Azurefile (needed for our web and app):
 https://docs.microsoft.com/en-us/azure/aks/azure-files-dynamic-pv
+
+2. Create and deploy Azure Container Registry
 
 3. Grant AKS access to ACR
 ```https://docs.microsoft.com/en-us/azure/container-registry/container-registry-auth-aks?toc=%2fazure%2faks%2ftoc.json#grant-aks-access-to-acr```
