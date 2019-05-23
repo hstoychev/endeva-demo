@@ -1,0 +1,377 @@
+{
+
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+
+    "contentVersion": "1.0.0.0",
+
+    "parameters": {
+
+      "containerRegistryName": {
+
+        "type": "string",
+
+        "minLength": 5,
+
+        "maxLength": 50,
+
+        "metadata": {"description": "Name of your new Azure Container Registry-ACR."}
+
+      },
+
+      "containerRegistryLocation": {
+
+        "type": "string",        
+
+        "metadata": {"description": "Location for all resources.This should be in the same region as the containers to minimise data ingress costs"}
+
+      },        
+
+      "containerRegistrySku": {
+
+        "type": "string",
+
+        "metadata": {"description": "Tier of your Azure Container Registry."},
+
+        "defaultValue": "Standard",
+
+        "allowedValues": [
+
+          "Basic",
+
+          "Standard",
+
+          "Premium"
+
+        ]
+
+      },
+
+      "assignPermission": {
+
+        "type": "string",
+
+        "allowedValues": [ 
+
+            "yes",
+
+            "no" 
+
+        ],
+
+        "defaultValue": "no",
+
+        "metadata": { "description": "If you want to assign a user, group, or service principal to Azure Container Registry. Will be granted all Container Registry roles at deployment time" }
+
+      },
+
+      "principalId":{
+
+      "type": "string",
+
+      "defaultValue": "none", 
+
+      "metadata": {"description": "The principal ID maps to the ID inside the Active Directory. It can point to a user, service principal, or security group."}
+
+      },
+
+
+
+      "application": {
+
+        "type": "string",
+
+        "metadata": { "description": "Name of the hosted application" }
+
+      },
+
+      "departmentName": {
+
+        "type": "string",
+
+        "metadata": { "description": "Department owning the server." }
+
+      },
+
+      "project": {
+
+        "type": "string",
+
+        "metadata": { "description": "Project name." }
+
+      }
+
+    },
+
+    "variables": 
+
+    { 
+
+      "containerRegistryAdminUserEnabled": "false",     
+
+      "ownerId": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Authorization/roleDefinitions/', '8e3af657-a8ff-443c-a75c-2fe8c4bcb635')]",
+
+      "contributorId": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Authorization/roleDefinitions/', 'b24988ac-6180-42a0-ab88-20f7382dd24c')]",
+
+      "readerId": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Authorization/roleDefinitions/', 'acdd72a7-3385-48ef-bd42-f606fba81ae7')]",
+
+      "acrImageSignerId": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Authorization/roleDefinitions/', '6cef56e8-d556-48e5-a04f-b8e64114680f')]",
+
+      "acrPullId": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Authorization/roleDefinitions/', '7f951dda-4ed3-4680-a7ca-43fe172d538d')]",
+
+      "acrPushId": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Authorization/roleDefinitions/', '8311e382-0749-4cb8-b61a-304f252e45ec')]",      
+
+      "acrQuarantineReaderId": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Authorization/roleDefinitions/', 'cdda3590-29a3-44f6-95f2-9f980659eb04')]",
+
+      "acrQuarantineWriterId": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Authorization/roleDefinitions/', 'c8d4ff99-41c3-41a8-9f60-21dfdad59608')]"  
+
+    },
+
+    "resources": [
+
+      {
+
+        "name": "[parameters('containerRegistryName')]",
+
+        "type": "Microsoft.ContainerRegistry/registries",
+
+        "apiVersion": "2017-10-01",
+
+        "location": "[parameters('containerRegistryLocation')]",        
+
+        "comments": "Container Registry for storing docker images",
+
+        "tags": {
+
+            "DXC_AutoDeploy": "True",
+
+            "Application": "[parameters('application')]",
+
+            "DepartmentName": "[parameters('departmentName')]",
+
+            "Project": "[parameters('project')]"
+
+          },       
+
+        "sku": {
+
+          "name": "[parameters('containerRegistrySku')]",
+
+          "tier": "[parameters('containerRegistrySku')]"
+
+        },
+
+        "properties": {
+
+          "adminUserEnabled": "[variables('containerRegistryAdminUserEnabled')]"
+
+        }
+
+      },
+
+        {
+
+        "type": "Microsoft.ContainerRegistry/registries/providers/roleAssignments",      
+
+        "name": "[concat(parameters('containerRegistryName'), '/Microsoft.Authorization/', guid(concat(resourceGroup().id), parameters('containerRegistryName'), variables('ownerId')))]",      
+
+        "apiVersion": "2017-10-01-preview",
+
+        "condition": "[equals(parameters('assignPermission'),'yes')]",
+
+        "dependsOn": ["[resourceId('Microsoft.ContainerRegistry/registries', parameters('containerRegistryName'))]"],        
+
+        "location": "[parameters('containerRegistryLocation')]", 
+
+        "properties": {
+
+            "roleDefinitionId":"[variables('ownerId')]",            
+
+            "principalId": "[parameters('principalId')]"           
+
+            }
+
+        },
+
+        {
+
+          "type": "Microsoft.ContainerRegistry/registries/providers/roleAssignments",      
+
+          "name": "[concat(parameters('containerRegistryName'), '/Microsoft.Authorization/', guid(concat(resourceGroup().id), parameters('containerRegistryName'), variables('contributorId')))]",
+
+          "apiVersion": "2017-10-01-preview",
+
+          "condition": "[equals(parameters('assignPermission'),'yes')]",
+
+          "dependsOn": ["[resourceId('Microsoft.ContainerRegistry/registries', parameters('containerRegistryName'))]"],        
+
+          "location": "[parameters('containerRegistryLocation')]", 
+
+          "properties": {
+
+              "roleDefinitionId":"[variables('contributorId')]",            
+
+              "principalId": "[parameters('principalId')]"           
+
+              }
+
+          },
+
+        {
+
+          "type": "Microsoft.ContainerRegistry/registries/providers/roleAssignments",      
+
+          "name": "[concat(parameters('containerRegistryName'), '/Microsoft.Authorization/', guid(concat(resourceGroup().id), parameters('containerRegistryName'), variables('readerId')))]",
+
+          "apiVersion": "2017-10-01-preview",
+
+          "condition": "[equals(parameters('assignPermission'),'yes')]",
+
+          "dependsOn": ["[resourceId('Microsoft.ContainerRegistry/registries', parameters('containerRegistryName'))]"],        
+
+          "location": "[parameters('containerRegistryLocation')]", 
+
+          "properties": {
+
+              "roleDefinitionId":"[variables('readerId')]",            
+
+              "principalId": "[parameters('principalId')]"           
+
+              }
+
+          },          
+
+          {
+
+            "type": "Microsoft.ContainerRegistry/registries/providers/roleAssignments",      
+
+            "name": "[concat(parameters('containerRegistryName'), '/Microsoft.Authorization/', guid(concat(resourceGroup().id), parameters('containerRegistryName'), variables('acrImageSignerId')))]",
+
+            "apiVersion": "2017-10-01-preview",
+
+            "condition": "[equals(parameters('assignPermission'),'yes')]",
+
+            "dependsOn": ["[resourceId('Microsoft.ContainerRegistry/registries', parameters('containerRegistryName'))]"],        
+
+            "location": "[parameters('containerRegistryLocation')]", 
+
+            "properties": {
+
+                "roleDefinitionId":"[variables('acrImageSignerId')]",            
+
+                "principalId": "[parameters('principalId')]"           
+
+                }
+
+            },  
+
+          {
+
+            "type": "Microsoft.ContainerRegistry/registries/providers/roleAssignments",      
+
+            "name": "[concat(parameters('containerRegistryName'), '/Microsoft.Authorization/', guid(concat(resourceGroup().id), parameters('containerRegistryName'), variables('acrPullId')))]",
+
+            "apiVersion": "2017-10-01-preview",
+
+            "condition": "[equals(parameters('assignPermission'),'yes')]",
+
+            "dependsOn": ["[resourceId('Microsoft.ContainerRegistry/registries', parameters('containerRegistryName'))]"],        
+
+            "location": "[parameters('containerRegistryLocation')]", 
+
+            "properties": {
+
+                "roleDefinitionId":"[variables('acrPullId')]",            
+
+                "principalId": "[parameters('principalId')]"           
+
+                }
+
+            },
+
+          {
+
+            "type": "Microsoft.ContainerRegistry/registries/providers/roleAssignments",      
+
+            "name": "[concat(parameters('containerRegistryName'), '/Microsoft.Authorization/', guid(concat(resourceGroup().id), parameters('containerRegistryName'), variables('acrPushId')))]",
+
+            "apiVersion": "2017-10-01-preview",
+
+            "condition": "[equals(parameters('assignPermission'),'yes')]",
+
+            "dependsOn": ["[resourceId('Microsoft.ContainerRegistry/registries', parameters('containerRegistryName'))]"],        
+
+            "location": "[parameters('containerRegistryLocation')]", 
+
+            "properties": {
+
+                "roleDefinitionId":"[variables('acrPushId')]",            
+
+                "principalId": "[parameters('principalId')]"           
+
+                }
+
+            },
+
+            {
+
+              "type": "Microsoft.ContainerRegistry/registries/providers/roleAssignments",      
+
+              "name": "[concat(parameters('containerRegistryName'), '/Microsoft.Authorization/', guid(concat(resourceGroup().id), parameters('containerRegistryName'), variables('acrQuarantineReaderId')))]",
+
+              "apiVersion": "2017-10-01-preview",
+
+              "condition": "[equals(parameters('assignPermission'),'yes')]",
+
+              "dependsOn": ["[resourceId('Microsoft.ContainerRegistry/registries', parameters('containerRegistryName'))]"],        
+
+              "location": "[parameters('containerRegistryLocation')]", 
+
+              "properties": {
+
+                  "roleDefinitionId":"[variables('acrQuarantineReaderId')]",            
+
+                  "principalId": "[parameters('principalId')]"           
+
+                  }
+
+              },
+
+              {
+
+                "type": "Microsoft.ContainerRegistry/registries/providers/roleAssignments",      
+
+                "name": "[concat(parameters('containerRegistryName'), '/Microsoft.Authorization/', guid(concat(resourceGroup().id), parameters('containerRegistryName'), variables('acrQuarantineWriterId')))]",
+
+                "apiVersion": "2017-10-01-preview",
+
+                "condition": "[equals(parameters('assignPermission'),'yes')]",
+
+                "dependsOn": ["[resourceId('Microsoft.ContainerRegistry/registries', parameters('containerRegistryName'))]"],        
+
+                "location": "[parameters('containerRegistryLocation')]", 
+
+                "properties": {
+
+                    "roleDefinitionId":"[variables('acrQuarantineWriterId')]",            
+
+                    "principalId": "[parameters('principalId')]"           
+
+                    }
+
+                }
+
+      ],
+
+    "outputs": {
+
+      "containerRegistryLoginServer": {
+
+        "value": "[reference(resourceId('Microsoft.ContainerRegistry/registries',parameters('containerRegistryName')),'2017-10-01').loginServer]",
+
+        "type": "string"
+
+      }
+
+    }
+
+  }
