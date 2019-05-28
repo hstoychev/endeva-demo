@@ -1,0 +1,51 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: apache
+  namespace: default
+  labels:
+    tier: backend
+spec:
+  loadBalancerIP: 40.115.0.21
+  type: LoadBalancer 
+  ports:
+  - protocol: TCP
+    port: 80
+  selector:
+    app: apache
+    tier: backend
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: apache
+  labels:
+    tier: backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: apache
+      tier: backend
+  template:
+    metadata:
+      labels:
+        app: apache
+        tier: backend
+    spec:
+      volumes:
+      - name: app
+        persistentVolumeClaim:
+          claimName: app-pvc
+      containers:
+      - name: apache
+        image: demoacr.azurecr.io/hstoychev/endeva-demo-apache:latest
+        imagePullSecrets:
+        - name: my-acr-secret
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: app
+          mountPath: /app   
