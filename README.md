@@ -69,6 +69,8 @@ az role assignment create --assignee $CLIENT_ID --role acrpull --scope $ACR_ID
 - Create GitHub Service connection using OAuth (otherwise cannot manage AKS cluster infrastructure)
 
 3.1. Configure Builds-Pipelines 
-- Set Build pipeline for initial Persistant Volume and Volume Claim on K8s cluster and run to deploy it on AKS.
-- Set two Builds pipelines for build and push docker images from GitHub repo to ACR. Both PHP and NGINX Continues Deployment CD pipelines.
-- Set 
+- Set Continuous Integration CI: 
+Two "Builds pipelines" for initial Persistant Volume and Volume Claim on K8s cluster and MySQL container. Run to deploy it on AKS.
+- Set Continuous Delivery:
+Two "Builds pipelines" for build and push docker images from GitHub repo to ACR. Both PHP and NGINX Continues Deployment CD pipelines.
+
