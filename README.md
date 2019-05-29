@@ -77,12 +77,15 @@ Two "Builds pipelines" for build and push docker images from GitHub repo to ACR.
 
 4. Some Kubernetes CLI commands:
 
-- Delete all
+- Delete all:
+
 ``kubectl delete daemonsets,replicasets,services,deployments,pods,rc,pvc,pv,configmap,storageclasses,secrets --all``
 
-- Delete only Pods, ReplicaSets, Deployments, Services
+- Delete only Pods, ReplicaSets, Deployments, Services:
+
 ``kubectl delete daemonsets,replicasets,services,deployments,pods,rc --all``
 
-- Apply storage and php
-``kubectl apply -f aks.disk.yaml
-kubectl apply -f php.deployment.yaml``
+- Apply storage and php:
+
+``kubectl apply -f aks.disk.yaml``
+``kubectl apply -f php.deployment.yaml``
