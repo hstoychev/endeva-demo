@@ -4,6 +4,7 @@
 - Azure Subscription 
 - Azure DevOps (free version): https://dev.azure.com/hstoychev87/endeva-demo
 - GitHub repository: (if readed in Azure DevOps https://github.com/hstoychev/endeva-demo )
+- Website address: http://40.115.0.21/
 
 ## Our end goal:
 Microservices and automation Build/Deploy process CI/CD for common web application technologies such as PHP-Apache/NginX-MySQL. Docker registry, monitoring and orchestration in Cloud native environment: Azure Container Registry, Azure Kubernetes Services, Azure DevOps.
