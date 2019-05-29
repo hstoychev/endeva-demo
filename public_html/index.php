@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-<title>W3.CSS Template</title>
+<title>Hristo CV</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -28,7 +28,7 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
           </div>
         </div>
         <div class="w3-container">
-          <p><i class="fa fa-briefcase fa-fw w3-margin-right w3-large w3-text-teal"></i>DevOps</p>
+          <p><i class="fa fa-briefcase fa-fw w3-margin-right w3-large w3-text-teal"></i>DevOps Engineer</p>
           <p><i class="fa fa-home fa-fw w3-margin-right w3-large w3-text-teal"></i>Sofia, BG</p>
           <p><i class="fa fa-envelope fa-fw w3-margin-right w3-large w3-text-teal"></i>h.stoychev87@gmail.com</p>
           <p><i class="fa fa-phone fa-fw w3-margin-right w3-large w3-text-teal"></i>+359 885 312 860</p>
@@ -77,19 +77,19 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
       <div class="w3-container w3-card w3-white w3-margin-bottom">
         <h2 class="w3-text-grey w3-padding-16"><i class="fa fa-suitcase fa-fw w3-margin-right w3-xxlarge w3-text-teal"></i>Work Experience</h2>
         <div class="w3-container">
-          <h5 class="w3-opacity"><b>Azure Infrastructure Developer in DXC</b></h5>
+          <h5 class="w3-opacity"><b>Azure Infrastructure Developer at DXC</b></h5>
           <h6 class="w3-text-teal"><i class="fa fa-calendar fa-fw w3-margin-right"></i>Sept 2018 - <span class="w3-tag w3-teal w3-round">Current</span></h6>
           <p>Part of DXC Sofia Azure Build and Offering team. Developing new customer requests and features based on MS Azure public cloud.</p>
           <hr>
         </div>
         <div class="w3-container">
-          <h5 class="w3-opacity"><b>Cloud Application Engineer in DXC</b></h5>
+          <h5 class="w3-opacity"><b>Cloud Application Engineer at DXC</b></h5>
           <h6 class="w3-text-teal"><i class="fa fa-calendar fa-fw w3-margin-right"></i>May 2018 - Sept 2018</h6>
           <p>Part of Build and Project Services team. Responsible for cloud and cloud application design and architecture. Build and configure sustainable cloud application infrastructure and Platform as a Service solutions for customers.</p>
           <hr>
         </div>
         <div class="w3-container">
-          <h5 class="w3-opacity"><b>Cloud Engineer in Bulpros</b></h5>
+          <h5 class="w3-opacity"><b>Cloud Engineer at Bulpros</b></h5>
           <h6 class="w3-text-teal"><i class="fa fa-calendar fa-fw w3-margin-right"></i>2016 - May 2018</h6>
           <p>Onboarding new tenants in the cloud environment. Building and design architecture in Azure. </p><br>
         </div>
