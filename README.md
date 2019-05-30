@@ -25,7 +25,7 @@ NOTE: Be sure that AKS Service Principal account have OWNER role permissions(RBA
 
 ``az aks install-cli `` 
 
-in Windows will have to add the PATH (set PATH=%PATH%;C:\Users\hstoy\.azure-kubectl" or "$env:path += 'C:\Users\user\.azure-kubectl')
+in Windows will have to add the PATH ("set PATH=%PATH%;C:\Users\<username>\.azure-kubectl" or "$env:path += 'C:\Users\<user>\.azure-kubectl')
 
 ``az aks get-credentials -g myResourceGroup -n myCluster ``
 
