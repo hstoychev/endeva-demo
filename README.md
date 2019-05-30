@@ -20,12 +20,11 @@ NOTE: Be sure that AKS Service Principal account have OWNER role permissions(RBA
 1.2. Connect to AKS:
 - Pre-rquisite: install azure CLI(https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest)
 - Use those commands: 
-``
-az login
-az aks install-cli `` in Windows will have to add the PATH (set PATH=%PATH%;C:\Users\hstoy\.azure-kubectl" or "$env:path += 'C:\Users\user\.azure-kubectl')`
+
+``az login
+az aks install-cli `` in Windows will have to add the PATH (set PATH=%PATH%;C:\Users\hstoy\.azure-kubectl" or "$env:path += 'C:\Users\user\.azure-kubectl')
 ``az aks get-credentials -g myResourceGroup -n myCluster
-kubectl get nodes
-```
+kubectl get nodes``
 
 
 1.2.1. Connect to AKS dashboard with required permissions: https://docs.microsoft.com/en-us/azure/aks/kubernetes-dashboard
