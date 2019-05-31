@@ -1,4 +1,4 @@
-# ENDEVA DEMO README
+# ENDAVA DEMO README
 
 ## Pre-requesites & Links:
 - Azure Subscription 
@@ -93,3 +93,10 @@ Two "Builds pipelines" for build and push docker images from GitHub repo to ACR.
 
 ``kubectl apply -f aks.disk.yaml``
 ``kubectl apply -f php.deployment.yaml``
+
+5. TODO
+- Build TLS/SSL termination using cert-manager (which provides automatic Lets Encrypt)  for AKS: https://docs.microsoft.com/bg-bg/azure/aks/ingress-tls
+- Secure pods and AKS cluster by: setting network policy in Azure, NSG providing access only from restricted IP's andetc.
+- Monitorign and logging: Real-time container logs(preview), Azure Monitor for containers (above mentioned), view kubelet logs and etc.
+- Alerts: configure AKS Metric Alerts (to send email, sms or ITSM conenctor for Service Now and etc. )
+- Kubernetes Rollout policies: https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#updating-a-deployment
